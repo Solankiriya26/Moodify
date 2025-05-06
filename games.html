@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for white and black theme */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .bg-dark {
+            background-color: #f1f1f1;
+        }
+
+        .text-dark {
+            color: #333;
+        }
+
+        .bg-light {
+            background-color: #f1f1f1;
+        }
+
+        .text-light {
+            color: #333;
+        }
+
+        .category-card:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .game-card:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .category-card:hover .category-img,
+        .game-card:hover .game-img {
+            filter: brightness(70%);
+        }
+
+        /* Game-specific styles */
+        .game-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-container h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .game-container input,
+        .game-container button {
+            margin: 5px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .game-container input {
+            width: 200px;
+            background-color: #444;
+            color: white;
+        }
+
+        .game-container button {
+            background-color: #007bff;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Bubble Popper Game Styles */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #00d1b2;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .bubble.pop {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .bubble-container {
+            position: relative;
+            height: 400px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .score {
+            font-size: 20px;
+            color: black;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .reset-btn {
+            background-color: #ff5722;
+            color: white;
+            margin-top: 15px;
+        }
+
+        /* Breathing Exercise Styles */
+        .breathing-circle {
+            width: 150px;
+            height: 150px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin: 20px auto;
+            animation: breathe 8s infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Emotion Matching Game Styles */
+        .emotion-matching-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .emotion-card {
+            background-color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .emotion-card.flipped {
+            background-color: #007bff;
+            transform: rotateY(180deg);
+        }
+
+        .emotion-card.matched {
+            background-color: #28a745;
+            cursor: default;
+        }
+
+        .emotion-card .card-content {
+            visibility: hidden;
+        }
+
+        .emotion-card.flipped .card-content,
+        .emotion-card.matched .card-content {
+            visibility: visible;
+        }
+
+        /* Shape Changer Game Styles */
+        .shape-changer {
+            width: 100px;
+            height: 100px;
+            margin: 50px auto;
+            background-color: #ff5722;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .shape-changer.square {
+            border-radius: 10px;
+        }
+
+        .shape-changer.circle {
+            border-radius: 50%;
+        }
+
+        .shape-changer.triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #ff5722;
+        }
+
+        /* Layout for game containers (3-column grid) */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);  /* 3 columns */
+            gap: 20px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-light text-dark">
+
+    <!-- Header -->
+    <header class="bg-black text-white py-6">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-3xl font-bold">Moodify Games Hub</h1>
+            <nav class="space-x-6">
+                <a href="home.html" class="hover:text-gray-200">Home</a>
+                <a href="capture.html" class="hover:text-gray-200">Detect Face Emotions</a>
+                <a href="review.html" class="hover:text-gray-200">About</a>
+            </nav>
+        </div>
+    </header>
+    <body>
+        <div id="target-emotion">
+            Target Emotion: <span id="targetEmotion">Neutral</span>
+        </div>
+
+        <div class="student-video">
+            <h2>Live Video</h2>
+            <video id="studentVideo" width="700" height="500" autoplay></video>
+            <div id="student-emotion">
+                Detected Emotion: <span id="emotion">-</span>
+            </div>
+            <div id="feedback">
+                Feedback: <span id="feedbackText">-</span>
+            </div>
+        </div>
+
+    
+    <!-- Main Content -->
+    <main class="container mx-auto py-12 px-4">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+            <h2 class="text-4xl font-semibold mb-4">Welcome to the Moodify Game Hub</h2>
+            <p class="text-xl">Browse through our fun, entertaining, and mood-boosting games!</p>
+        </section>
+
+        <!-- Mood-Based Games Section -->
+        <section id="mood-games" class="mb-12">
+            <h2 class="text-3xl font-semibold text-center mb-8">Mood-Based Games</h2>
+
+            <div class="games-grid">
+
+                <!-- Relaxing Breathing Exercise -->
+                <div class="game-container">
+                    <h3>Relaxing Breathing Exercise</h3>
+                    <p>Follow the circle to breathe in and out:</p>
+                    <div class="breathing-circle">Breathe</div>
+                    <p id="breathingInstructions" class="mt-2">Breathe in... Breathe out...</p>
+                </div>
+
+                <!-- Positive Affirmation Challenge -->
+                <div class="game-container">
+                    <h3>Positive Affirmation Challenge</h3>
+                    <p>Click the button to get a positive affirmation:</p>
+                    <button id="generateAffirmation">Generate Affirmation</button>
+                    <p id="affirmationResult" class="mt-2"></p>
+                </div>
+
+                <!-- Bubble Popper Game -->
+                <div class="game-container">
+                    <h3>Bubble Popper Game</h3>
+                    <p>Click on the bubbles to pop them!</p>
+                    <div class="bubble-container" id="bubbleContainer"></div>
+                    <div class="score" id="bubbleScore">Score: 0</div>
+                    <button id="resetButton" class="reset-btn">Reset Game</button>
+                </div>
+
+                <!-- Emotion Matching Game -->
+                <div class="game-container">
+                    <h3>Emotion Matching Game</h3>
+                    <p>Match the emotions with their corresponding facial expressions:</p>
+                    <div class="emotion-matching-board" id="emotionMatchingBoard"></div>
+                    <p id="emotionMatchingResult" class="mt-2"></p>
+                    <button id="resetEmotionMatching" class="reset-btn">Reset Game</button>
+                </div>
+
+                <!-- Shape Transform Game (Satisfying Game 1) -->
+                <div class="game-container">
+                    <h3>Shape Transform Game</h3>
+                    <p>Click the shape to transform it!</p>
+                    <div class="shape-changer square" id="shapeChanger"></div>
+                </div>
+
+                <!-- Color Switch Game (Satisfying Game 2) -->
+                <div class="game-container">
+                    <h3>Color Switch Game</h3>
+                    <p>Click the square to change its color!</p>
+                    <div class="shape-changer" id="colorSwitch"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+    <!-- Footer -->
+    <footer class="bg-black text-white text-center py-4">
+        <p>&copy; 2025 Moodify Games Hub</p>
+    </footer>
+
+    <!-- Load Face-API.js and Custom Script -->
+    <script defer src="face-api.min.js"></script>
+    <script defer src="scripts.js"></script>
+    <link rel="stylesheet" href="./styles1.css">
+
+
+    <script>
+        // Positive Affirmation Challenge
+const affirmations = [
+    "You are doing great!",
+    "Keep up the great work!",
+    "Believe in yourself!",
+    "You are amazing!",
+    "Stay positive!",
+    "You got this!"
+];
+
+document.getElementById("generateAffirmation").addEventListener("click", function () {
+    const randomAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
+    document.getElementById("affirmationResult").textContent = randomAffirmation;
+});
+
+// Shape Transform Game
+document.getElementById("shapeChanger").addEventListener("click", function () {
+    const shapeElement = this;
+    const shapes = ["square", "circle", "triangle"];
+    const currentShape = shapeElement.classList.contains("square")
+        ? "square"
+        : shapeElement.classList.contains("circle")
+        ? "circle"
+        : "triangle";
+
+    // Remove the current shape class
+    shapeElement.classList.remove(currentShape);
+
+    // Add the next shape class
+    const nextShape = shapes[(shapes.indexOf(currentShape) + 1) % shapes.length];
+    shapeElement.classList.add(nextShape);
+});
+
+// Color Switch Game
+document.getElementById("colorSwitch").addEventListener("click", function () {
+    const colorSwitchElement = this;
+    // Generate a random color
+    const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    colorSwitchElement.style.backgroundColor = randomColor;
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const emotions = ['😊', '😢', '😠', '😌', '🤩', '😇'];
+    let flippedCards = [];
+    let matchedCards = [];
+    let score = 0;
+
+    function shuffleArray(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
+    function createEmotionBoard() {
+        const board = document.getElementById('emotionMatchingBoard');
+        board.innerHTML = ''; // Clear previous board
+        flippedCards = [];
+        matchedCards = [];
+        score = 0;
+        document.getElementById('emotionMatchingResult').textContent = '';
+
+        let allEmotions = shuffleArray([...emotions, ...emotions]); // Duplicate emotions for matching pairs
+        allEmotions.forEach((emotion) => {
+            const card = document.createElement('div');
+            card.classList.add('emotion-card');
+            card.setAttribute("data-emotion", emotion);
+
+            const cardContent = document.createElement('div');
+            cardContent.classList.add('card-content');
+            cardContent.textContent = emotion;
+
+            card.appendChild(cardContent);
+            card.addEventListener('click', handleCardClick);
+
+            board.appendChild(card);
+        });
+    }
+
+    function handleCardClick(event) {
+        const clickedCard = event.currentTarget;
+
+        // Prevent clicking more than 2 cards
+        if (flippedCards.length === 2 || clickedCard.classList.contains('flipped') || clickedCard.classList.contains('matched')) {
+            return;
+        }
+
+        // Flip the card
+        clickedCard.classList.add('flipped');
+        flippedCards.push(clickedCard);
+
+        // Check for a match if two cards are flipped
+        if (flippedCards.length === 2) {
+            setTimeout(checkMatch, 500);
+        }
+    }
+
+    function checkMatch() {
+        const [card1, card2] = flippedCards;
+
+        if (card1.getAttribute("data-emotion") === card2.getAttribute("data-emotion")) {
+            // Matched
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            matchedCards.push(card1, card2);
+            score++;
+            document.getElementById('emotionMatchingResult').textContent = `Matched! Score: ${score}`;
+        } else {
+            // Not matched, flip back
+            card1.classList.remove('flipped');
+            card2.classList.remove('flipped');
+        }
+
+        flippedCards = [];
+
+        // Check if all cards are matched
+        if (matchedCards.length === emotions.length * 2) {
+            document.getElementById('emotionMatchingResult').textContent = `Congratulations! You matched all pairs!`;
+        }
+    }
+
+    document.getElementById('resetEmotionMatching').addEventListener('click', createEmotionBoard);
+
+    createEmotionBoard(); // Initialize the board
+});
+
+
+        // Bubble Popper Game (working version)
+        const bubbleContainer = document.getElementById('bubbleContainer');
+        const bubbleScore = document.getElementById('bubbleScore');
+        let currentScore = 0;
+
+        function spawnBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * (50 - 30) + 30;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.top = `${Math.random() * 350}px`;
+            bubble.style.left = `${Math.random() * 300}px`;
+
+            bubble.addEventListener('click', () => {
+                currentScore++;
+                bubble.classList.add('pop');
+                bubbleScore.textContent = `Score: ${currentScore}`;
+                setTimeout(() => {
+                    bubble.remove();
+                }, 300);
+            });
+
+            bubbleContainer.appendChild(bubble);
+        }
+
+        setInterval(spawnBubble, 1000);
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            currentScore = 0;
+            bubbleScore.textContent = `Score: 0`;
+            bubbleContainer.innerHTML = '';
+        });
+
+    </script>
+</body>
+
+</html>
+    

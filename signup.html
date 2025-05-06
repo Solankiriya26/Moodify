@@ -1,0 +1,110 @@
+<html>
+ <head>
+  <title>
+   SignUp Screen
+  </title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+            background-color: #180e0e;
+            color: #000;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 0;
+            margin-top: 130px;
+           height: 450px;
+           width: 400px;
+           padding: 50px;
+        }
+        .sidebar {
+            background-color: #b0d5f3;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        
+        .sidebar a {
+            display: block;
+            color: #000;
+            margin: 10px 0;
+            text-decoration: none;
+        }
+        .sidebar a.active {
+            color: rgb(58, 4, 4);
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h5 {
+            margin-bottom: 20px;
+        }
+        .content .form-group {
+            margin-bottom: 20px;
+            
+        }
+        .submit {
+            background-color: rgb(0, 89, 255);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            float: center;
+            transition: background-color 0.3s;
+        
+        }
+        .slider {
+            width: 100%;
+        }
+        
+        
+        .aligncenter{
+            text-align: center;
+            align-content: center ;
+            align-items: center;
+            align-self: center;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <div class="row">
+    <div class="aligncenter">
+    <form id="signup" action="">
+    <h3>MoodiFy</h3>
+        &nbsp;&nbsp;&nbsp;
+     <h5 >
+      Enter Your Details
+     </h5>
+     &nbsp;&nbsp;&nbsp;
+     <div class="form-group">
+      <label for="username">
+       Username
+      </label>
+      <input class="form-control" id="username"  type="text" value="" required/>
+     </div>
+    <br>
+     <div class="form-group">
+      <label for="email">
+       Email
+      </label>
+      <input class="form-control" id="email"  type="email" value="" required/>
+     </div>
+    <br> 
+     <button class="submit" type="submit">
+      Submit
+     </button>
+     &nbsp;&nbsp;&nbsp;
+    </form>
+    
+    </div>
+    
+   </div>
+   <br>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="mail.js"></script>
+ </body>
+</html>

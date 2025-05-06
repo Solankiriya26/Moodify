@@ -1,0 +1,10 @@
+#student-emotion, #target-emotion, #feedback {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+#feedbackText {
+    font-size: 22px;
+    font-weight: bold;
+}

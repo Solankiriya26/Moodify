@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <style>
+      h1 {
+        font-family: cursive;
+        text-align: center;
+      }
+
+      .centeralign {
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Text Fade-in Animation */
+      @keyframes textAppear {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Brand Name Appearance */
+      .moodify-text {
+        animation: textAppear 1.5s ease-out 2s forwards;
+      }
+
+      /* Arrow Animation to form a smile */
+      @keyframes arrowToSmile {
+        0% {
+          transform: translateY(10px) rotate(0deg);
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 20px solid black;
+          border-radius: 0;
+        }
+        50% {
+          transform: translateY(0) rotate(0deg);
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-bottom: 20px solid black;
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+          width: 100px;  /* Increase width */
+          height: 40px;  /* Adjust height to match the new width */
+          border-radius: 0 0 50% 50%;
+          background-color: black;
+          border: 0;
+        }
+      }
+
+      /* Arrow Styling */
+      .arrow {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 20px solid black;
+        margin-top: 20px;
+        animation: arrowToSmile 3s ease-in-out forwards;
+      }
+
+    </style>
+    <title>Moodify</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+      <!-- Brand Name -->
+      <h1 class="text-4xl sm:text-6xl lg:text-8xl font-extrabold text-black opacity-0 moodify-text">
+        Moodify
+      </h1>
+
+      <!-- Arrow -->
+      <div class="arrow"></div>
+    </div>
+
+    <script>
+      setTimeout(function () {
+        window.location.href = "home.html"; // Replace with your desired URL
+      }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+  </body>
+</html>

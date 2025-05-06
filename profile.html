@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* Body Background */
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            margin-top: 50px;
+        }
+
+        /* Container */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar a {
+            display: block;
+            color: #ffffff;
+            margin: 15px 0;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: #FFB74D;
+        }
+
+        .profile-info img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 4px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .profile-info img:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-info h5 {
+            margin-top: 15px;
+            color: #333;
+            font-size: 22px;
+        }
+
+        .profile-info p {
+            color: #777;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .form-range:focus {
+            background: #333;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+        }
+
+        .form-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+        }
+
+        .form-check-input {
+            margin-left: 10px;
+        }
+
+        .save-btn {
+            background-color: #FFB74D;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .save-btn:hover {
+            background-color: #FF9800;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-check-label {
+            font-size: 16px;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode .container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #222d44;
+        }
+
+        body.dark-mode .form-range {
+            background: #555;
+        }
+
+        body.dark-mode .save-btn {
+            background-color: #FF9800;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Section -->
+            <div class="col-md-3 sidebar">
+                <div class="text-center profile-info">
+                    <!-- Profile Image -->
+                    <img id="profileImage" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" />
+                    <h5>John Doe</h5>
+                    <p>johndoe@example.com</p>
+                    <!-- Button to change profile picture -->
+                    <button class="btn btn-primary mt-3" id="changeProfilePictureBtn">Change Profile Picture</button>
+                    <input type="file" id="fileInput" style="display:none;" accept="image/*">
+                </div>
+
+                <a href="#" id="profileLink" class="active">Profile</a>
+                <a href="#" id="moodTrackerLink">Mood Tracker</a>
+                <a href="#" id="settingsLink">Settings</a>
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="col-md-9">
+                <!-- Profile Section -->
+                <div class="tab-content active" id="profileContent">
+                    <h3>Profile</h3>
+                    <!-- Username -->
+                    <div class="form-group d-flex justify-content-between">
+                        <label for="username" class="me-2">Username</label>
+                        <div class="d-flex">
+                            <input class="form-control" id="username" type="text" value="johndoe" readonly />
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group d-flex justify-content-between">
+                        <label for="email" class="me-2">Email</label>
+                        <div class="d-flex">
+                            <input class="form-control" id="email" type="email" value="johndoe@example.com" readonly />
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-group d-flex justify-content-between">
+                        <label for="phone" class="me-2">Phone Number</label>
+                        <div class="d-flex">
+                            <input class="form-control" id="phone" type="text" value="+123 456 7890" />
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group d-flex justify-content-between">
+                        <label for="address" class="me-2">Address</label>
+                        <div class="d-flex">
+                            <input class="form-control" id="address" type="text" value="1234 Street Name, City, Country" />
+                        </div>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="form-group d-flex justify-content-between">
+                        <label for="dob" class="me-2">Date of Birth</label>
+                        <div class="d-flex">
+                            <input class="form-control" id="dob" type="date" value="1990-01-01"  />
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-3" id="saveDetailsBtn" onclick="saveDetails()">Save Details</button>
+                </div>
+
+                <!-- Mood Tracker Section -->
+                <div class="tab-content" id="moodTrackerContent">
+                    <h3>Mood Tracker</h3>
+                    <div class="form-group">
+                        <label for="mood">Your Mood</label>
+                        <input class="form-control" type="text" id="mood" placeholder="Describe your mood">
+                    </div>
+                    <button class="save-btn" onclick="saveMood()">Save Mood</button>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="tab-content" id="settingsContent">
+                    <h3>Settings</h3>
+
+                    <!-- Video Settings -->
+                    <div class="form-group">
+                        <label for="resolution">Camera Resolution</label>
+                        <input type="range" class="form-range" id="resolution" min="240" max="1080" value="720">
+                        <small>Resolution: <span id="resolution-value">720p</span></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frameRate">Frame Rate</label>
+                        <input type="range" class="form-range" id="frameRate" min="15" max="60" value="30">
+                        <small>Frame Rate: <span id="frameRate-value">30 FPS</span></small>
+                    </div>
+
+                    <!-- Appearance Settings -->
+                    <div class="toggle-switch form-check form-switch">
+                        <label class="form-check-label" for="darkMode">Dark Mode</label>
+                        <input class="form-check-input" id="darkMode" type="checkbox" onclick="toggleDarkMode()">
+                    </div>
+
+                    <button class="btn btn-primary mt-3" id="saveSettingsBtn">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+
+        function togglePhone() {
+            const phoneInput = document.getElementById("phone");
+            const editButton = document.getElementById("editPhoneBtn");
+            if (phoneInput.readOnly) {
+                phoneInput.readOnly = false;
+                editButton.textContent = "Save";
+            } else {
+                phoneInput.readOnly = true;
+                editButton.textContent = "Edit";
+            }
+        }
+
+        function toggleAddress() {
+            const addressInput = document.getElementById("address");
+            const editButton = document.getElementById("editAddressBtn");
+            if (addressInput.readOnly) {
+                addressInput.readOnly = false;
+                editButton.textContent = "Save";
+            } else {
+                addressInput.readOnly = true;
+                editButton.textContent = "Edit";
+            }
+        }
+
+        function toggleDob() {
+            const dobInput = document.getElementById("dob");
+            const editButton = document.getElementById("editDobBtn");
+            if (dobInput.readOnly) {
+                dobInput.readOnly = false;
+                editButton.textContent = "Save";
+            } else {
+                dobInput.readOnly = true;
+                editButton.textContent = "Edit";
+            }
+        }
+
+        // Toggle Dark Mode
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        // File Input for Changing Profile Picture
+        document.getElementById("changeProfilePictureBtn").addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+        });
+
+        document.getElementById("fileInput").addEventListener("change", function (e) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById("profileImage").src = reader.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        function saveDetails() {
+            alert("Details saved!");
+        }
+
+        function saveMood() {
+            const mood = document.getElementById('mood').value;
+            alert("Mood saved: " + mood);
+        }
+
+        // Toggle between Profile, Mood Tracker, and Settings
+        document.getElementById("profileLink").addEventListener("click", function () {
+            toggleTab("profileContent");
+        });
+
+        document.getElementById("moodTrackerLink").addEventListener("click", function () {
+            toggleTab("moodTrackerContent");
+        });
+
+        document.getElementById("settingsLink").addEventListener("click", function () {
+            toggleTab("settingsContent");
+        });
+
+        function toggleTab(contentId) {
+            const tabContents = document.querySelectorAll(".tab-content");
+            tabContents.forEach(function (tab) {
+                tab.classList.remove("active");
+            });
+            document.getElementById(contentId).classList.add("active");
+        }
+
+    </script>
+
+</body>
+
+</html>

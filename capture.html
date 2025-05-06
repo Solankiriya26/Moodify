@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<title>Live Instructional Video Template</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+	<header>
+        <div class="navbar">
+		 <div class="title">Moodify</div>
+         <div class="container">
+         <input type="search" class="search" placeholder="Search">
+         <a href="home.html"><button>Home</button></a>
+         <a href="games.html"><button>Games</button></a>
+        </div>
+        </div>
+	</header>
+	<main>
+		<div class="grid">
+
+			<div class="live-video" >
+                <h2>Instructional Video</h2>
+                <video width="700" height="500" autoplay muted src="live-instructional-video.mp4" controls></video>
+            </div>
+
+            <div class="student-video" >
+                <h2>Live Video</h2>
+                <video id="studentVideo" width="700" height="500" autoplay muted src="student-video.mp4" controls></video>
+                <div id="student-emotion">
+                    Emotion: <span id="emotion">
+            </div>
+                  
+            </div>
+            
+            <div class="emotion-history">
+                <h2>Emotion History</h2>
+                <ul id="emotionHistoryList"></ul>
+            </div>
+            
+            <div class="emotion-trends">
+                <h2>Emotion Trends</h2>
+                <canvas id="emotionChart"></canvas>
+            </div>
+            
+		</div>
+	</main>
+	<footer>
+		<p>© 2025 Moodify Instructional Video Template</p>
+	</footer>
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+</body>
+</html>
